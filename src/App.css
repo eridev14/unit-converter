@@ -1,11 +1,13 @@
 .content {
   position: relative;
-  max-width: 400px;
+  max-width: calc((4 * (80px + 0.4rem)) - (0.4rem));
   top: 100px;
   /* border: 1px solid; */
 }
 
 .header {
+  position: relative;
+  width: 100%;
   margin-bottom: 1rem;
 }
 
@@ -15,10 +17,24 @@
   background: none;
   border: none;
   font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn--nav {
   color: #faf0ca;
+  animation: navBtn 5s infinite linear;
+}
+
+@keyframes navBtn {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .btn--nav:hover {
@@ -28,29 +44,54 @@
 .btn--up {
   position: absolute;
   left: 50%;
+  top: 226px;
+  z-index: 10;
+  background-color: #3a3a3a;
   transform: translateX(-50%);
-  top: 80px;
   font-size: 1.4rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: all .5s;
 }
 
-.btn--convertions{
-  border: 1px solid rgba(255, 255, 255, 0.582);
-  min-width: 80px;
-  height: 80px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: .5rem;
-  flex-direction: column;
+.convert.active~.btn--up {
+  left: 45%;
+  top: calc(195px + (2 * 28px));
+  transform-origin: 50%;
+  transform: translateX(25%) rotateX(180deg);
+  transition: all .5s;
 }
-.btn__icon{
+
+.btn--convertions {
+  min-width: 80px;
+  max-width: 80px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.253);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.btn--convertions.active {
+  border: 1px solid tomato;
+}
+
+.btn--convertions.active .btn__text {
+  color: rgba(252, 201, 192, 0.767);
+}
+
+.btn__icon {
   font-size: 2rem;
 }
 
-.btn__text{
-  font-size: .9rem;
+.btn__text {
+  position: relative;
+  font-size: .7rem;
+  font-weight: 600;
+  color: #ffffffbd;
 }
 
 /* NAV */
@@ -76,16 +117,16 @@
   display: flex;
   justify-content: space-between;
   gap: 3rem;
-  /* border: 1px solid; */
   overflow: hidden;
   transition: height .5s;
 }
 
 .convert.active {
-  height: 250px;
+  height: calc(80px + (2 * 28px));
 }
 
 .convert__side {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: .4rem;
@@ -97,12 +138,14 @@
 }
 
 .convert__input {
+  width: 100%;
   min-height: 30px;
+  padding: 0 .5rem;
   border-radius: 5px;
   background: none;
   border: none;
   outline: none;
-  border: 1px solid;
+  border: 1px solid rgba(255, 255, 255, 0.623);
 }
 
 .convert__equal {
@@ -121,6 +164,7 @@
 }
 
 .checked__item {
+  height: 25px;
   display: flex;
   align-items: center;
   gap: .6rem;
@@ -131,8 +175,8 @@
 
 .checked__check {
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   outline: 1px solid;
   outline-offset: 2px;
   border-radius: 50%;
@@ -143,18 +187,24 @@
 }
 
 .convertions {
-  border-top: 1px solid rgba(255, 255, 255, 0.288);
+  position: relative;
+  border-top: 2px solid rgba(255, 255, 255, 0.795);
   padding: .5rem 0;
 }
 
-.convertions__title{
+.convertions__title {
+  font-size: 1.3rem;
+  font-weight: 500;
   margin-bottom: 1.5rem;
 }
 
-.convertions__grid{
+.convertions__grid {
   display: flex;
   justify-content: center;
-  justify-content: space-between;
-  gap: .5rem;
+  gap: .4rem;
   flex-wrap: wrap;
+}
+
+.convertions__item {
+  text-align: center;
 }
