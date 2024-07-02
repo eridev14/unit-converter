@@ -1,0 +1,13 @@
+/* .header {
+  min-height: 200px;
+} */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.convert {
+  display: flex;
+  justify-content: space-between;
+}
