@@ -56,7 +56,6 @@
 
 .convert.active~.btn--up {
   left: 45%;
-  top: calc(195px + (2 * 28px));
   transform-origin: 50%;
   transform: translateX(25%) rotateX(180deg);
   transition: all .5s;
@@ -122,7 +121,7 @@
 }
 
 .convert.active {
-  height: calc(80px + (2 * 28px));
+  height: calc(80px + (3 * 28px));
 }
 
 .convert__side {
