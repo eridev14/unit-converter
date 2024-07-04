@@ -4,17 +4,17 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 library.add(fas);
 
 import "./App.css";
-import { Header } from "./Header";
-import { BtnConvertion } from "./BtnConvertion";
 import { useState } from "react";
+import { BtnConvertion } from "./components/BtnConvertion";
+import { Header } from "./components/Header";
 
 function App() {
-  const [convert, setConvert] = useState("temperatura");
+  const [unit, setUnit] = useState("temperatura");
   return (
     <div className="content">
       <Header />
       <section className="convertions">
-        <h2 className="convertions__title">Convertions: Temperatura</h2>
+        <h2 className="convertions__title">Convertions: {unit}</h2>
         <div className="convertions__grid">
           <BtnConvertion />
         </div>
