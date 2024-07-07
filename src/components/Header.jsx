@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faGear } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckedItem } from "./CheckedItem";
 
 const convertItemsArrayTo = [
@@ -14,11 +14,29 @@ const convertItemsArrayFrom = [
   { id: 3, name: "Kelvin", check: false },
 ];
 
+const conversionMap = {
+  Celsius: {
+    Fahrenheit: (celsius) => (celsius * 9) / 5 + 32,
+    Kelvin: (celsius) => celsius + 273.15,
+    Celsius: (celsius) => celsius,
+  },
+  Fahrenheit: {
+    Celsius: (fahrenheit) => ((fahrenheit - 32) * 5) / 9,
+    Kelvin: (fahrenheit) => ((fahrenheit + 459.67) * 5) / 9,
+    Fahrenheit: (fahrenheit) => fahrenheit,
+  },
+  Kelvin: {
+    Celsius: (kelvin) => kelvin - 273.15,
+    Fahrenheit: (kelvin) => (kelvin * 9) / 5 - 459.67,
+    Kelvin: (kelvin) => kelvin,
+  },
+};
+
 export const Header = () => {
   const [down, setDown] = useState(true);
-  const [valueFrom, setValueFrom] = useState(1);
+  const [valueFrom, setValueFrom] = useState(0);
+  const [valueTo, setValueTo] = useState(0);
   const [value, setValue] = useState({ from: "Celsius", to: "Celsius" });
-
   const [convertArrayFrom, setConvertArrayFrom] = useState(
     convertItemsArrayFrom
   );
@@ -31,6 +49,23 @@ export const Header = () => {
   function handleChangeInput(e) {
     let number = e.target.value;
     setValueFrom(number);
+    let conv = convertUnit(number, value.from, value.to);
+    console.log(conv);
+    setValueTo(conv);
+  }
+
+  function convertUnit(value, fromUnit, toUnit) {
+    if (value < 1) return 0;
+    if (fromUnit === toUnit) {
+      return value;
+    }
+
+    const converter = conversionMap[fromUnit]?.[toUnit];
+    if (!converter) {
+      throw new Error(`Conversión de ${fromUnit} a ${toUnit} no soportada.`);
+    }
+
+    return converter(value);
   }
 
   function filterConvert() {
@@ -42,6 +77,15 @@ export const Header = () => {
     };
     setValue(newCon);
   }
+
+  useEffect(() => {
+    filterConvert();
+  }, [convertArrayFrom, convertArrayTo]);
+
+  useEffect(() => {
+    let conv = convertUnit(valueFrom, value.from, value.to);
+    setValueTo(conv);
+  }, [value, convertArrayFrom, convertArrayTo]);
 
   return (
     <>
@@ -64,7 +108,7 @@ export const Header = () => {
         >
           <div className="convert__side convert__side--from">
             <label htmlFor="txtFrom" className="convert__label">
-              Celsius
+              {value.from}
             </label>
             <input
               type="number"
@@ -80,7 +124,6 @@ export const Header = () => {
                   key={id}
                   name={name}
                   check={check}
-                  filterConvert={filterConvert}
                   convertArray={convertArrayFrom}
                   setConvertArray={setConvertArrayFrom}
                 />
@@ -89,14 +132,14 @@ export const Header = () => {
           </div>
           <div className="convert__side convert__side--to">
             <label htmlFor="txtFrom" className="convert__label">
-              Celsius
+              {value.to}
             </label>
             <input
               type="number"
               name="txtFrom"
               id="txtFrom"
               className="convert__input"
-              value={valueFrom}
+              value={valueTo}
               readOnly
             />
             <section className="checked">
@@ -105,7 +148,6 @@ export const Header = () => {
                   key={id}
                   name={name}
                   check={check}
-                  filterConvert={filterConvert}
                   convertArray={convertArrayTo}
                   setConvertArray={setConvertArrayTo}
                 />
