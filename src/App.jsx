@@ -17,6 +17,7 @@ function App() {
         <h2 className="convertions__title">Convertions: {unit}</h2>
         <div className="convertions__grid">
           <BtnConvertion />
+          <BtnConvertion />
         </div>
       </section>
     </div>
