@@ -1,12 +1,6 @@
 import { useRef } from "react";
 
-export const CheckedItem = ({
-  name,
-  check,
-  convertArray,
-  setConvertArray,
-  filterConvert,
-}) => {
+export const CheckedItem = ({ name, check, convertArray, setConvertArray }) => {
   const labelRef = useRef();
 
   function handleCheck() {
@@ -21,7 +15,6 @@ export const CheckedItem = ({
 
   const handleClick = () => {
     handleCheck();
-    filterConvert();
   };
 
   return (
